@@ -24,9 +24,8 @@ with open(input_path) as csvfile:
     for row in csvreader:
         if row[2] not in unique_candidates:
             unique_candidates.append(row[2])
-        #count the votes each unique candidate received with a for loop
-        #Khan, Correy, Li, O'Tooley
 
+        #count the votes each unique candidate received with a for loop       
         if row[2] == "Khan":
             khan_count= khan_count + 1
         elif row[2] == "Correy":
@@ -35,11 +34,6 @@ with open(input_path) as csvfile:
             li_count= li_count + 1
         elif row[2] == "O'Tooley":
             otooley_count= otooley_count +1
-    print(unique_candidates)
-    print(khan_count)
-    print(correy_count)
-    print(li_count)
-    print(otooley_count)
 
 #calculate the percentage of votes each candidate received
 total_votes= khan_count + correy_count + li_count + otooley_count
@@ -47,19 +41,45 @@ khan_percent= khan_count/total_votes
 correy_percent= correy_count/total_votes
 li_percent= li_count/total_votes
 otooley_percent= otooley_count/total_votes
-print(khan_percent)
-print(correy_percent)
-print(li_percent)
-print(otooley_percent)
+
 
 #calculate the winner with max()
 candidate_dict={khan_count:"Khan",correy_count:"Correy",
                 li_count:"Li",otooley_count:"O'Tooley"}
 
 max= max(khan_count,correy_count,li_count,otooley_count)
-print(f"{candidate_dict[max]}")
+
 
 #output data to terminal
 
+print("")
+print("Election Results ")
+print("--------------------------- ")
+print(f"Total Votes: {total_votes}")
+print("--------------------------- ")
+print(f"Khan: {round(khan_percent*100,3)}%  ({khan_count})")
+print(f"Correy: {round(correy_percent*100,3)}% ({correy_count})")
+print(f"Li: {round(li_percent*100,3)}% ({li_count})")
+print(f"O'Tooley: {round(otooley_percent*100,3)}% ({otooley_count})")
+print("--------------------------- ")
+print(f"Winner: {candidate_dict[max]}")
+print("--------------------------- ")
+
 #output the data to csv
+output_path= os.path.join("Analysis/election_results.txt")
+
+with open(output_path, "w") as txtfile:
+
+    txtfile.write(" \n")
+    txtfile.write("Election Results \n")
+    txtfile.write("---------------------- \n")
+    txtfile.write(f"Total Votes: {total_votes} \n")
+    txtfile.write("---------------------- \n")
+    txtfile.write(f"Khan: {round(khan_percent*100,3)}% ({khan_count}) \n")
+    txtfile.write(f"Correy: {round(correy_percent*100,3)}% ({correy_count}) \n")
+    txtfile.write(f"Li: {round(li_percent*100,3)}% ({li_count}) \n")
+    txtfile.write(f"O'Tooley: {round(otooley_count*100,3)}% ({otooley_count}) \n")
+    txtfile.write("---------------------- \n")
+    txtfile.write(f"Winner: {candidate_dict[max]} \n")
+    txtfile.write("---------------------- \n")
 

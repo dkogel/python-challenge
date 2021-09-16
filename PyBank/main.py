@@ -7,7 +7,7 @@ csvpath= os.path.join("Resources/budget_data.csv")
 
 all_months= []
 all_profit= []
-profit_changes= []
+profit_changes= [""]
 
 lastrow= 0
 
@@ -31,8 +31,7 @@ with open(csvpath) as csvfile:
         #create changes list
         change= int(row[1])-lastrow
         profit_changes.append(change)
-        lastrow= int(row[1])                   
-        
+        lastrow= int(row[1])                     
         
 #remove first element from changes list because it's not a change
 profit_changes.pop(0)
@@ -45,15 +44,20 @@ average_changes= round(sum_changes/num_changes,2)
 #greatest increase and decrease
 min(profit_changes)
 max(profit_changes)
+change_dates_dict= dict(zip(profit_changes, all_months))
+print(change_dates_dict)
+
+
+
 
 print("")
 print("Financial Analysis")
 print("---------------------------")
 print(f"Total months: {total_months}")
-print(f"Total: {total_profit}")
-print(f"Average Change: {average_changes}")
-print(f"Greatest Decrease in profits: {min(profit_changes)}")
-print(f"Geatest Increase in profits: {max(profit_changes)}")
+print(f"Total: ${total_profit}")
+print(f"Average Change: ${average_changes}")
+print(f"Greatest Decrease in profits: {change_dates_dict[min(profit_changes)]} ${min(profit_changes)}")
+print(f"Geatest Increase in profits: {change_dates_dict[max(profit_changes)]} ${max(profit_changes)}")
 
 #write to text file
 output_path= os.path.join("Analysis/Financial_Analysis.txt")
@@ -67,5 +71,5 @@ with open(output_path, "w") as txtfile:
     txtfile.write(f"Total months: {total_months} \n")
     txtfile.write(f"Total: {total_profit} \n")
     txtfile.write(f"Average Change: {average_changes} \n")
-    txtfile.write(f"Greatest Decrease in profits: {min(profit_changes)} \n")
-    txtfile.write(f"Greatest Increase in profits: {max(profit_changes)} \n")
+    txtfile.write(f"Greatest Decrease in profits: {change_dates_dict[min(profit_changes)]} ${min(profit_changes)} \n")
+    txtfile.write(f"Geatest Increase in profits: {change_dates_dict[max(profit_changes)]} ${max(profit_changes)} \n")
